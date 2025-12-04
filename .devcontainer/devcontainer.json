@@ -1,13 +1,18 @@
 {
   "name": "Microservices App",
-  "dockerComposeFile": ["../docker-compose.yml"],
-  "service": "dev-tools",
-  "workspaceFolder": "/workspace",
-  "forwardPorts": [8080, 3000, 3001, 3002, 5432],
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "forwardPorts": [8080, 3000, 5432],
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "customizations": {
     "vscode": {
-      "extensions": ["Vue.volar", "ms-azuretools.vscode-docker"]
+      "extensions": [
+        "Vue.volar",
+        "ms-azuretools.vscode-docker"
+      ]
     }
   }
 }
