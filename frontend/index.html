@@ -218,7 +218,7 @@
             async testAPI() {
                 this.apiResponse = "🔄 Connexion a l'API en cours...";
                 try {
-                    const response = await fetch(this.apiUrl);
+                    const response = await fetch('/api');
                     const data = await response.json();
                     this.apiResponse = `✅ API Response:\n${JSON.stringify(data, null, 2)}`;
                     console.log('API Response:', data);
@@ -231,7 +231,7 @@
             async testHealth() {
                 this.apiResponse = "🔄 Test de sante en cours...";
                 try {
-                    const response = await fetch(this.apiUrl + '/health');
+                    const response = await fetch('/api/health');
                     const data = await response.json();
                     this.apiResponse = `❤️ Health Check:\n${JSON.stringify(data, null, 2)}`;
                     console.log('Health Check:', data);
