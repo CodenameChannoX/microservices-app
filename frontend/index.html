@@ -2,34 +2,91 @@
 <html>
 <head>
     <title>Mon Application</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            color: white;
+            text-align: center;
+        }
+        .services {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .service-card {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+        }
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background: #f0f0f0;
+        }
+    </style>
 </head>
 <body>
-    <div id="app">
-        <h1>🎉 Bienvenue dans mon application !</h1>
-        <p>Message : {{ message }}</p>
-        <button @click="sayHello">Clique-moi !</button>
+    <div class="container">
+        <h1>🚀 Mon Premier Microservice !</h1>
+        <p>Félicitations ! Tu as réussi à créer une application microservices complète.</p>
         
-        <h2>Services :</h2>
-        <ul>
-            <li>Frontend Vue.js ✅</li>
-            <li>API Gateway ✅</li>
-            <li>PostgreSQL ✅</li>
-        </ul>
+        <div id="app">
+            <p>Message : {{ message }}</p>
+            <button @click="changeMessage">Clique ici !</button>
+            
+            <div class="services">
+                <div class="service-card">
+                    <h3>🌐 Frontend</h3>
+                    <p>Vue.js sur le port 8080</p>
+                </div>
+                <div class="service-card">
+                    <h3>🔧 API Gateway</h3>
+                    <p>Node.js/Express sur le port 3000</p>
+                </div>
+                <div class="service-card">
+                    <h3>🗄️ Base de données</h3>
+                    <p>PostgreSQL sur le port 5432</p>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
         const { createApp } = Vue;
         
         createApp({
             data() {
                 return {
-                    message: "Salut ! C'est mon premier projet microservices !"
+                    message: "Clique sur le bouton pour changer ce message !"
                 }
             },
             methods: {
-                sayHello() {
-                    this.message = "Bravo ! Tu as cliqué ! 🎯";
+                changeMessage() {
+                    this.message = "🎉 Bravo ! Tu as réussi !";
                 }
             }
         }).mount('#app');
