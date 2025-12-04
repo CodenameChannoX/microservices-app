@@ -2,13 +2,14 @@ version: '3.8'
 
 services:
   # Frontend simple
-  frontend:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./frontend:/usr/share/nginx/html
-
+ frontend:
+  image: node:18-alpine
+  working_dir: /app
+  volumes:
+    - ./frontend:/app
+  ports:
+    - "8080:8080"
+  command: sh -c "cd /app && npm install && npx vite --host"
   # API simple
   api:
     image: node:18-alpine
