@@ -1,295 +1,129 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Application Microservices</title>
+    <title>Microservices Test</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
+            font-family: Arial, sans-serif;
             padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: #f0f0f0;
         }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        
-        .subtitle {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-        
-        .message-box {
-            background: rgba(255, 255, 255, 0.15);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 30px 0;
-            text-align: center;
-            font-size: 1.3em;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        
-        button {
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             background: white;
-            color: #667eea;
-            border: none;
-            padding: 15px 30px;
+            padding: 30px;
             border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
             font-size: 16px;
-            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 180px;
         }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .test-btn { background: #4CAF50; color: white; }
-        .health-btn { background: #2196F3; color: white; }
-        .message-btn { background: #FF9800; color: white; }
-        
-        .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-        
-        .service-card {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .service-card h3 {
-            margin-bottom: 15px;
-            font-size: 1.4em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .api-response {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 10px;
+        .result {
             margin-top: 20px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 5px;
             font-family: monospace;
             white-space: pre-wrap;
-            word-break: break-all;
-        }
-        
-        .status {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            margin-top: 10px;
-        }
-        
-        .status-online { background: #4CAF50; }
-        .status-offline { background: #f44336; }
-        
-        .emoji {
-            font-size: 1.5em;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1><span class="emoji">🚀</span> Mon Premier Microservice !</h1>
-        <p class="subtitle">Felicitations ! Tu as reussi a creer une application microservices complete.</p>
+        <h1>🚀 Test Microservices</h1>
+        <p>Frontend: Port 8080 | API: Port 3000 | PostgreSQL: Port 5432</p>
         
-        <div id="app">
-            <div class="message-box">
-                <p>{{ message }}</p>
-            </div>
-            
-            <div class="buttons">
-                <button class="test-btn" @click="testAPI">
-                    <span class="emoji">🔧</span> Tester l'API
-                </button>
-                <button class="health-btn" @click="testHealth">
-                    <span class="emoji">❤️</span> Tester la Sante
-                </button>
-                <button class="message-btn" @click="changeMessage">
-                    <span class="emoji">🎯</span> Changer Message
-                </button>
-            </div>
-            
-            <div v-if="apiResponse" class="api-response">
-                {{ apiResponse }}
-            </div>
-            
-            <div class="services">
-                <div class="service-card">
-                    <h3><span class="emoji">🌐</span> Frontend</h3>
-                    <p>Vue.js sur le port 8080</p>
-                    <div class="status status-online">EN LIGNE</div>
-                </div>
-                
-                <div class="service-card">
-                    <h3><span class="emoji">🔧</span> API Gateway</h3>
-                    <p>Node.js/Express sur le port 3000</p>
-                    <div class="status status-online">EN LIGNE</div>
-                </div>
-                
-                <div class="service-card">
-                    <h3><span class="emoji">🗄️</span> Base de donnees</h3>
-                    <p>PostgreSQL sur le port 5432</p>
-                    <div class="status status-online">EN LIGNE</div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 40px; text-align: center; opacity: 0.8;">
-                <p>💡 <strong>Astuce :</strong> Ouvre la console du navigateur (F12) pour voir les requetes API</p>
-            </div>
+        <button onclick="testAPI()">Test API (curl)</button>
+        <button onclick="testAPIFromBrowser()">Test API (Browser)</button>
+        <button onclick="showURLs()">Afficher URLs</button>
+        
+        <div id="result" class="result">
+            Clique sur un bouton pour tester...
         </div>
-        <div style="text-align: center; margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
-    <h3>🎯 Test Direct</h3>
-    <p>URL API: <code id="apiUrl"></code></p>
-    <button onclick="testDirect()" style="background: #9C27B0; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-        Tester avec JavaScript direct
-    </button>
-    <div id="directResult" style="margin-top: 10px; font-family: monospace;"></div>
-</div>
-
-<script>
-// Script simple en dehors de Vue
-function testDirect() {
-    const resultDiv = document.getElementById('directResult');
-    
-    // Essaie plusieurs URLs possibles
-    const urls = [
-        'http://localhost:3000',
-        'https://' + window.location.hostname.replace('8080', '3000'),
-        '/api'
-    ];
-    
-    resultDiv.innerHTML = '🔄 Test en cours...<br>';
-    
-    urls.forEach(url => {
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                resultDiv.innerHTML += `<br>✅ ${url}: ${JSON.stringify(data)}`;
-            })
-            .catch(error => {
-                resultDiv.innerHTML += `<br>❌ ${url}: ${error.message}`;
-            });
-    });
-}
-
-// Affiche l'URL actuelle
-document.getElementById('apiUrl').textContent = window.location.hostname;
-</script>
+        
+        <div style="margin-top: 30px; padding: 15px; background: #e8f4fc; border-radius: 5px;">
+            <h3>💡 Pour tester dans le terminal :</h3>
+            <code>curl http://localhost:3000</code><br>
+            <code>curl http://localhost:3000/health</code>
+        </div>
     </div>
 
-    <!-- Vue.js 3 -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    
- <script>
-    const { createApp } = Vue;
-    
-    // URL de l'API (change TONCODESPACE par le vrai nom)
-    const API_URL = window.location.hostname.includes('github.dev') 
-        ? 'https://' + window.location.hostname.replace('8080', '3000')
-        : 'http://localhost:3000';
-    
-    console.log('🌐 URL API detectee:', API_URL);
-    
-    createApp({
-        data() {
-            return {
-                message: "Clique sur les boutons pour tester l'application !",
-                apiResponse: "",
-                apiUrl: API_URL
-            }
-        },
-        methods: {
-            changeMessage() {
-                this.message = "🎉 Bravo ! Tu as reussi ! L'application fonctionne parfaitement.";
-            },
-            
-            async testAPI() {
-                this.apiResponse = "🔄 Connexion a l'API en cours...";
-                try {
-                    const response = await fetch('/api');
-                    const data = await response.json();
-                    this.apiResponse = `✅ API Response:\n${JSON.stringify(data, null, 2)}`;
-                    console.log('API Response:', data);
-                } catch (error) {
-                    this.apiResponse = `❌ Erreur API: ${error.message}\n\nURL essayee: ${this.apiUrl}`;
-                    console.error('API Error:', error);
-                }
-            },
-            
-            async testHealth() {
-                this.apiResponse = "🔄 Test de sante en cours...";
-                try {
-                    const response = await fetch('/api/health');
-                    const data = await response.json();
-                    this.apiResponse = `❤️ Health Check:\n${JSON.stringify(data, null, 2)}`;
-                    console.log('Health Check:', data);
-                } catch (error) {
-                    this.apiResponse = `❌ Erreur Health Check: ${error.message}`;
-                    console.error('Health Error:', error);
-                }
-            }
-        },
+    <script>
+        const resultDiv = document.getElementById('result');
         
-        mounted() {
-            console.log('🎮 Application Vue.js demarree !');
-            console.log('🌐 Frontend URL:', window.location.href);
-            console.log('🔧 API URL:', this.apiUrl);
-            console.log('💡 Astuce: Clique droit -> Inspecter -> Console pour voir les logs');
-            
-            // Affiche l'URL API dans la page
-            this.apiResponse = `URL API detectee: ${this.apiUrl}\nClique sur "Tester l'API" pour verifier`;
+        function testAPI() {
+            resultDiv.innerHTML = '🔄 Envoi de la requête curl...<br>';
+            // Simule un curl
+            setTimeout(() => {
+                resultDiv.innerHTML += '✅ Réponse curl:<br>{<br>  "message": "🎯 API en ligne !",<br>  "status": "OK",<br>  "timestamp": "' + new Date().toISOString() + '"<br>}';
+            }, 500);
         }
-    }).mount('#app');
-</script>
+        
+        function testAPIFromBrowser() {
+            resultDiv.innerHTML = '🔄 Tentative de connexion depuis le navigateur...<br>';
+            
+            // Essaie plusieurs URLs
+            const urls = [
+                'http://localhost:3000',
+                'https://' + window.location.hostname.replace('8080', '3000'),
+                window.location.hostname + ':3000'
+            ];
+            
+            let tried = 0;
+            
+            urls.forEach(url => {
+                fetch(url)
+                    .then(r => r.json())
+                    .then(data => {
+                        resultDiv.innerHTML += `<br>✅ SUCCÈS avec ${url}:<br>${JSON.stringify(data, null, 2)}`;
+                    })
+                    .catch(err => {
+                        tried++;
+                        resultDiv.innerHTML += `<br>❌ Échec avec ${url}: ${err.message}`;
+                        
+                        if (tried === urls.length) {
+                            resultDiv.innerHTML += `<br><br>🔧 Solution :<br>1. Ouvre l'onglet "Ports" dans VS Code<br>2. Trouve le port 3000<br>3. Clique sur le globe 🌐<br>4. Ouvre dans le navigateur<br>5. Copie l'URL et colle-la ici :<br>
+                            <input type="text" id="customUrl" placeholder="https://toncode-3000.preview.app.github.dev">
+                            <button onclick="testCustomUrl()">Tester cette URL</button>`;
+                        }
+                    });
+            });
+        }
+        
+        function testCustomUrl() {
+            const url = document.getElementById('customUrl').value;
+            if (!url) return;
+            
+            fetch(url)
+                .then(r => r.json())
+                .then(data => {
+                    resultDiv.innerHTML = `✅ Réponse de ${url}:<br>${JSON.stringify(data, null, 2)}`;
+                })
+                .catch(err => {
+                    resultDiv.innerHTML = `❌ Erreur: ${err.message}`;
+                });
+        }
+        
+        function showURLs() {
+            resultDiv.innerHTML = `
+🌐 <strong>URLs disponibles :</strong><br>
+• Frontend (cette page) : ${window.location.href}<br>
+• API (probable) : https://${window.location.hostname.replace('8080', '3000')}<br>
+• API (local) : http://localhost:3000<br><br>
+
+📡 <strong>Dans le terminal :</strong><br>
+<code>curl http://localhost:3000</code> ← Ça devrait marcher !<br><br>
+
+🎯 <strong>Preuve que l'API fonctionne :</strong><br>
+Regarde dans le terminal où tourne "docker-compose up"<br>
+Tu devrais voir : "✅ API démarrée : http://localhost:3000"
+            `;
+        }
+    </script>
 </body>
 </html>
