@@ -192,53 +192,66 @@
     <!-- Vue.js 3 -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     
-    <script>
-        const { createApp } = Vue;
-        
-        createApp({
-            data() {
-                return {
-                    message: "Clique sur les boutons pour tester l'application !",
-                    apiResponse: ""
-                }
+ <script>
+    const { createApp } = Vue;
+    
+    // URL de l'API (change TONCODESPACE par le vrai nom)
+    const API_URL = window.location.hostname.includes('github.dev') 
+        ? 'https://' + window.location.hostname.replace('8080', '3000')
+        : 'http://localhost:3000';
+    
+    console.log('🌐 URL API detectee:', API_URL);
+    
+    createApp({
+        data() {
+            return {
+                message: "Clique sur les boutons pour tester l'application !",
+                apiResponse: "",
+                apiUrl: API_URL
+            }
+        },
+        methods: {
+            changeMessage() {
+                this.message = "🎉 Bravo ! Tu as reussi ! L'application fonctionne parfaitement.";
             },
-            methods: {
-                changeMessage() {
-                    this.message = "🎉 Bravo ! Tu as reussi ! L'application fonctionne parfaitement.";
-                },
-                
-                async testAPI() {
-                    try {
-                        const response = await fetch('https://toncodespace-3000.preview.app.github.dev');
-                        const data = await response.json();
-                        this.apiResponse = `✅ API Response:\n${JSON.stringify(data, null, 2)}`;
-                        console.log('API Response:', data);
-                    } catch (error) {
-                        this.apiResponse = `❌ Erreur API: ${error.message}`;
-                        console.error('API Error:', error);
-                    }
-                },
-                
-                async testHealth() {
-                    try {
-                        const response = await fetch('https://toncodespace-3000.preview.app.github.dev/health');
-                        const data = await response.json();
-                        this.apiResponse = `❤️ Health Check:\n${JSON.stringify(data, null, 2)}`;
-                        console.log('Health Check:', data);
-                    } catch (error) {
-                        this.apiResponse = `❌ Erreur Health Check: ${error.message}`;
-                        console.error('Health Error:', error);
-                    }
+            
+            async testAPI() {
+                this.apiResponse = "🔄 Connexion a l'API en cours...";
+                try {
+                    const response = await fetch(this.apiUrl);
+                    const data = await response.json();
+                    this.apiResponse = `✅ API Response:\n${JSON.stringify(data, null, 2)}`;
+                    console.log('API Response:', data);
+                } catch (error) {
+                    this.apiResponse = `❌ Erreur API: ${error.message}\n\nURL essayee: ${this.apiUrl}`;
+                    console.error('API Error:', error);
                 }
             },
             
-            mounted() {
-                console.log('🎮 Application Vue.js demarree !');
-                console.log('🌐 Frontend: http://localhost:8080');
-                console.log('🔧 API: http://localhost:3000');
-                console.log('🗄️ PostgreSQL: localhost:5432');
+            async testHealth() {
+                this.apiResponse = "🔄 Test de sante en cours...";
+                try {
+                    const response = await fetch(this.apiUrl + '/health');
+                    const data = await response.json();
+                    this.apiResponse = `❤️ Health Check:\n${JSON.stringify(data, null, 2)}`;
+                    console.log('Health Check:', data);
+                } catch (error) {
+                    this.apiResponse = `❌ Erreur Health Check: ${error.message}`;
+                    console.error('Health Error:', error);
+                }
             }
-        }).mount('#app');
-    </script>
+        },
+        
+        mounted() {
+            console.log('🎮 Application Vue.js demarree !');
+            console.log('🌐 Frontend URL:', window.location.href);
+            console.log('🔧 API URL:', this.apiUrl);
+            console.log('💡 Astuce: Clique droit -> Inspecter -> Console pour voir les logs');
+            
+            // Affiche l'URL API dans la page
+            this.apiResponse = `URL API detectee: ${this.apiUrl}\nClique sur "Tester l'API" pour verifier`;
+        }
+    }).mount('#app');
+</script>
 </body>
 </html>
