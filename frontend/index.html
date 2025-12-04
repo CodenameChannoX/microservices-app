@@ -187,6 +187,44 @@
                 <p>💡 <strong>Astuce :</strong> Ouvre la console du navigateur (F12) pour voir les requetes API</p>
             </div>
         </div>
+        <div style="text-align: center; margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+    <h3>🎯 Test Direct</h3>
+    <p>URL API: <code id="apiUrl"></code></p>
+    <button onclick="testDirect()" style="background: #9C27B0; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Tester avec JavaScript direct
+    </button>
+    <div id="directResult" style="margin-top: 10px; font-family: monospace;"></div>
+</div>
+
+<script>
+// Script simple en dehors de Vue
+function testDirect() {
+    const resultDiv = document.getElementById('directResult');
+    
+    // Essaie plusieurs URLs possibles
+    const urls = [
+        'http://localhost:3000',
+        'https://' + window.location.hostname.replace('8080', '3000'),
+        '/api'
+    ];
+    
+    resultDiv.innerHTML = '🔄 Test en cours...<br>';
+    
+    urls.forEach(url => {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                resultDiv.innerHTML += `<br>✅ ${url}: ${JSON.stringify(data)}`;
+            })
+            .catch(error => {
+                resultDiv.innerHTML += `<br>❌ ${url}: ${error.message}`;
+            });
+    });
+}
+
+// Affiche l'URL actuelle
+document.getElementById('apiUrl').textContent = window.location.hostname;
+</script>
     </div>
 
     <!-- Vue.js 3 -->
