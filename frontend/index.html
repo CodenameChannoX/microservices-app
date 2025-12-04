@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mon Application</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>🎉 Bienvenue dans mon application !</h1>
+        <p>Message : {{ message }}</p>
+        <button @click="sayHello">Clique-moi !</button>
+        
+        <h2>Services :</h2>
+        <ul>
+            <li>Frontend Vue.js ✅</li>
+            <li>API Gateway ✅</li>
+            <li>PostgreSQL ✅</li>
+        </ul>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        
+        createApp({
+            data() {
+                return {
+                    message: "Salut ! C'est mon premier projet microservices !"
+                }
+            },
+            methods: {
+                sayHello() {
+                    this.message = "Bravo ! Tu as cliqué ! 🎯";
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
