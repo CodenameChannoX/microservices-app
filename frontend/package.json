@@ -2,9 +2,10 @@
   "name": "frontend",
   "version": "1.0.0",
   "scripts": {
-    "dev": "npx serve -s . -l 8080"
+    "dev": "vite",
+    "build": "vite build"
   },
-  "dependencies": {
-    "vue": "^3.3.0"
+  "devDependencies": {
+    "vite": "^4.4.0"
   }
 }
