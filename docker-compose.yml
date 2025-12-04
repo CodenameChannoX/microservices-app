@@ -1,25 +1,7 @@
 version: '3.8'
 
 services:
-  # Frontend simple
-  frontend:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-    volumes:
-      - ./frontend:/usr/share/nginx/html
-
-  # API simple
-  api:
-    image: node:18-alpine
-    working_dir: /app
-    volumes:
-      - ./api-gateway:/app
-    ports:
-      - "3000:3000"
-    command: sh -c "cd /app && npm install && node server.js"
-
-  # PostgreSQL
+  # Base de données PostgreSQL
   postgres:
     image: postgres:15-alpine
     environment:
@@ -27,3 +9,38 @@ services:
       POSTGRES_DB: appdb
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Service API
+  api:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - ./api-gateway:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "cd /app && npm install --silent && node server.js"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=development
+
+  # Frontend avec serveur HTTP simple
+  frontend:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
