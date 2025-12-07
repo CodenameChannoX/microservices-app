@@ -1,24 +1,29 @@
 #!/bin/bash
 
-echo "🎉 Installation de tout ce qu'il faut..."
+echo "Setting up Microservices Development Environment..."
 
-# Mise à jour
+# Update packages
 apt-get update
 
-# Installation des outils de base
+# Install additional tools
 apt-get install -y \
-  git \
-  curl \
-  wget \
-  nano \
-  docker-compose
+    postgresql-client \
+    mongodb-clients \
+    curl \
+    wget \
+    git \
+    htop \
+    net-tools
 
-# Vérification
-echo "✅ Installation terminée :"
-echo "Git version: $(git --version)"
-echo "Docker Compose version: $(docker-compose --version)"
+# Create workspace directory
+mkdir -p /workspace
 
-# Création de la structure minimale
-mkdir -p frontend api-gateway
-
-echo "🚀 Tout est prêt !"
+# Setup complete
+echo "Setup complete!"
+echo "Services available at:"
+echo "- Frontend: http://localhost:8080"
+echo "- API Gateway: http://localhost:3000"
+echo "- User Service: http://localhost:3001"
+echo "- Product Service: http://localhost:3002"
+echo "- PostgreSQL: localhost:5432"
+echo "- MongoDB: localhost:27017"
