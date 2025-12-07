@@ -1,31 +1,33 @@
 {
     "name": "Microservices App",
-    "dockerComposeFile": ["../docker-compose.yml"],
-    "service": "frontend",
-    "workspaceFolder": "/workspace",
-    "shutdownAction": "stopCompose",
-    "remoteUser": "root",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
     "features": {
-        "ghcr.io/devcontainers/features/common-utils:2": {},
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "18"
-        },
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
+    "forwardPorts": [8080, 3000, 3001, 3002, 5432, 27017],
+    "portsAttributes": {
+        "8080": {
+            "label": "Frontend",
+            "onAutoForward": "openPreview"
+        },
+        "3000": {
+            "label": "API Gateway"
+        },
+        "5432": {
+            "label": "PostgreSQL"
+        },
+        "27017": {
+            "label": "MongoDB"
+        }
+    },
+    "postCreateCommand": "docker-compose up -d",
     "customizations": {
         "vscode": {
             "extensions": [
                 "Vue.volar",
                 "Vue.vscode-typescript-vue-plugin",
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode",
                 "ms-azuretools.vscode-docker"
-            ],
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash"
-            }
+            ]
         }
-    },
-    "postCreateCommand": "npm install",
-    "forwardPorts": [8080, 3000, 3001, 3002, 5432, 27017]
+    }
 }
