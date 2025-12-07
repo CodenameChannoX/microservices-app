@@ -1,20 +1,31 @@
 {
     "name": "Microservices App",
-    "dockerComposeFile": "../docker-compose.yml",
+    "dockerComposeFile": ["../docker-compose.yml"],
     "service": "frontend",
     "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+    "remoteUser": "root",
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "18"
+        },
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
     "customizations": {
         "vscode": {
             "extensions": [
-                "vue.volar",
-                "vue.vscode-typescript-vue-plugin",
+                "Vue.volar",
+                "Vue.vscode-typescript-vue-plugin",
                 "dbaeumer.vscode-eslint",
                 "esbenp.prettier-vscode",
                 "ms-azuretools.vscode-docker"
-            ]
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
         }
     },
     "postCreateCommand": "npm install",
-    "forwardPorts": [8080, 3000, 3001, 3002, 5432, 27017],
-    "shutdownAction": "stopCompose"
+    "forwardPorts": [8080, 3000, 3001, 3002, 5432, 27017]
 }
