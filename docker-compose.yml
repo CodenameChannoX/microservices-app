@@ -1,6 +1,15 @@
 version: '3.8'
 
 services:
+  # Development container
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+    volumes:
+      - ..:/workspace:cached
+    command: sleep infinity
+    networks:
+      - microservices-net
+
   # PostgreSQL Database for User Service
   postgres:
     image: postgres:15-alpine
