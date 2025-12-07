@@ -1,18 +1,20 @@
 {
-  "name": "Microservices App",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
-  "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
-    "ghcr.io/devcontainers/features/git:1": {}
-  },
-  "forwardPorts": [8080, 3000, 5432],
-  "postCreateCommand": "bash .devcontainer/setup.sh",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "Vue.volar",
-        "ms-azuretools.vscode-docker"
-      ]
-    }
-  }
+    "name": "Microservices App",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "frontend",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vue.volar",
+                "vue.vscode-typescript-vue-plugin",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "postCreateCommand": "npm install",
+    "forwardPorts": [8080, 3000, 3001, 3002, 5432, 27017],
+    "shutdownAction": "stopCompose"
 }
