@@ -1,124 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Microservices App</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { background: white; padding: 1rem; border-radius: 10px; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: #4361ee; }
-        .main { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; }
-        .card { background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { color: white; margin-bottom: 1rem; }
-        h2 { color: #333; margin-bottom: 1rem; }
-        .services { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
-        .service { background: #f8f9fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #4361ee; }
-        .status { padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; }
-        .online { background: #4CAF50; color: white; }
-        .offline { background: #f44336; color: white; }
-        .btn { padding: 0.75rem 1.5rem; background: #4361ee; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🚀 Microservices Application</h1>
-        
-        <div class="header">
-            <div class="logo">MicroApp</div>
-            <div>
-                <a href="/api" class="btn" target="_blank">API Gateway</a>
-                <a href="http://localhost:3001/health" class="btn" target="_blank">User Service</a>
-                <a href="http://localhost:3002/health" class="btn" target="_blank">Product Service</a>
-            </div>
-        </div>
-
-        <div class="main">
-            <div>
-                <div class="card">
-                    <h2>Architecture Overview</h2>
-                    <p>This application uses a microservices architecture with:</p>
-                    <div class="services">
-                        <div class="service">
-                            <strong>Frontend</strong><br>
-                            <span class="status online">Vue.js (Port 8080)</span>
-                        </div>
-                        <div class="service">
-                            <strong>API Gateway</strong><br>
-                            <span class="status online">Node.js (Port 3000)</span>
-                        </div>
-                        <div class="service">
-                            <strong>User Service</strong><br>
-                            <span class="status online">PostgreSQL (Port 3001)</span>
-                        </div>
-                        <div class="service">
-                            <strong>Product Service</strong><br>
-                            <span class="status online">MongoDB (Port 3002)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card" style="margin-top: 1rem;">
-                    <h2>Quick Start</h2>
-                    <ol style="margin-left: 1.5rem; line-height: 2;">
-                        <li>Access the API: <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></li>
-                        <li>Test User Service: <a href="http://localhost:3001/health" target="_blank">http://localhost:3001/health</a></li>
-                        <li>Test Product Service: <a href="http://localhost:3002/health" target="_blank">http://localhost:3002/health</a></li>
-                        <li>Seed sample products: <code>POST http://localhost:3002/products/seed</code></li>
-                    </ol>
-                </div>
-            </div>
-
-            <div>
-                <div class="card">
-                    <h2>API Endpoints</h2>
-                    <ul style="list-style: none; line-height: 2;">
-                        <li><strong>POST</strong> /api/auth/register</li>
-                        <li><strong>POST</strong> /api/auth/login</li>
-                        <li><strong>GET</strong> /api/auth/profile</li>
-                        <li><strong>GET</strong> /api/products</li>
-                        <li><strong>POST</strong> /api/products</li>
-                        <li><strong>GET</strong> /api/health</li>
-                    </ul>
-                </div>
-
-                <div class="card" style="margin-top: 1rem;">
-                    <h2>Default Credentials</h2>
-                    <p><strong>Admin:</strong> admin@example.com</p>
-                    <p><strong>Password:</strong> admin123</p>
-                    <p style="margin-top: 1rem;">Or register a new account</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Simple health check
-        async function checkHealth() {
-            const services = [
-                { name: 'API Gateway', url: 'http://localhost:3000/health' },
-                { name: 'User Service', url: 'http://localhost:3001/health' },
-                { name: 'Product Service', url: 'http://localhost:3002/health' }
-            ];
-            
-            for (const service of services) {
-                try {
-                    const response = await fetch(service.url);
-                    if (response.ok) {
-                        console.log(`✅ ${service.name} is healthy`);
-                    } else {
-                        console.log(`❌ ${service.name} is down`);
-                    }
-                } catch (error) {
-                    console.log(`❌ ${service.name} is unreachable`);
-                }
-            }
-        }
-        
-        // Check health on load
-        window.addEventListener('load', checkHealth);
-    </script>
-</body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
